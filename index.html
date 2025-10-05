@@ -45,6 +45,27 @@
       to { transform: translateY(-20px); }
     }
 
+    /* Freccia scroll */
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.2rem;
+      color: #fff;
+      animation: arrow-bounce 1.5s infinite;
+      text-decoration: none;
+      user-select: none;
+      cursor: pointer;
+    }
+    @keyframes arrow-bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 10px); }
+    }
+    .scroll-down:hover {
+      color: #ffebee;
+    }
+
     .confetti {
       position: absolute;
       width: 8px;
@@ -135,10 +156,11 @@
     <a href="biglietto_gianmarco.pdf" target="_blank">
       <button class="btn">Apri il tuo regalo 🎁</button>
     </a>
+    <div class="scroll-down" id="scrollDown">↓</div>
   </section>
 
   <section class="names-section" id="names-section">
-    <h2>Da tutti noiii</h2>
+    <h2>Da tutti noi 🎉</h2>
     <div class="names" id="names-container"></div>
   </section>
 
@@ -167,6 +189,11 @@
       });
     }, { threshold: 0.2 });
     observer.observe(document.getElementById("names-section"));
+
+    // Scroll morbido manuale
+    document.getElementById("scrollDown").addEventListener("click", () => {
+      document.getElementById("names-section").scrollIntoView({ behavior: "smooth" });
+    });
 
     // Confetti
     function createConfetti() {
