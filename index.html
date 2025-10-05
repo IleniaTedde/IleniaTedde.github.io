@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Auguri Bon Bon 🎉</title>
   <style>
     body {
@@ -10,13 +10,21 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow-x: hidden;
-      -webkit-text-size-adjust: 100%; /* evita zoom del testo su iOS */
+      -webkit-text-size-adjust: 100%;
+      /* padding per safe area notch */
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
+
     section {
       width: 100%;
       text-align: center;
       padding: 40px 16px;
+      box-sizing: border-box;
     }
+
     /* Hero */
     .hero {
       position: relative;
@@ -36,6 +44,7 @@
       from { transform: translateY(0); }
       to { transform: translateY(-20px); }
     }
+
     .confetti {
       position: absolute;
       width: 8px;
@@ -50,18 +59,19 @@
         opacity: 0;
       }
     }
+
     .btn {
       background: #ff6b81;
       color: #fff;
-      padding: 14px 24px;
+      padding: 12px 22px;
       border: none;
       border-radius: 30px;
       font-size: 1rem;
       cursor: pointer;
       transition: transform 0.2s, background 0.3s;
       margin-top: 30px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      min-height: 44px; /* tap target minimo consigliato */
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      min-height: 44px;
     }
     .btn:hover {
       transform: scale(1.05);
@@ -73,35 +83,37 @@
       background: #fff;
       border-radius: 24px 24px 0 0;
       padding: 30px 16px 50px;
-      box-shadow: 0 -6px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
     }
     .names-section h2 {
-      font-size: 1.4rem;
-      margin-bottom: 24px;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
       color: #ff4757;
     }
     .names {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       max-width: 650px;
       margin: 0 auto;
+      box-sizing: border-box;
     }
+
     .name {
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       color: #fff;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 6px 14px;
+      border-radius: 16px;
       font-weight: 600;
-      font-size: 1rem;
-      min-height: 36px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      font-size: 0.85rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(15px);
+      white-space: nowrap;
     }
     .animate {
-      animation: fadeUp 0.6s forwards;
+      animation: fadeUp 0.5s forwards;
     }
     @keyframes fadeUp {
       to {
@@ -111,16 +123,16 @@
     }
 
     @media (min-width: 768px) {
-      .hero { font-size: 4rem; }
-      .names-section h2 { font-size: 2rem; }
-      .name { font-size: 1.1rem; padding: 12px 26px; }
+      .hero { font-size: 3.5rem; }
+      .names-section h2 { font-size: 1.8rem; }
+      .name { font-size: 1rem; padding: 8px 18px; }
     }
   </style>
 </head>
 <body>
   <section class="hero">
     🎉 Auguri bon bon 🎉
-    <a href="biglietto.pdf" target="_blank">
+    <a href="biglietto_porta_di_roma_gianmarco.pdf" target="_blank">
       <button class="btn">Apri il tuo regalo 🎁</button>
     </a>
   </section>
@@ -136,7 +148,6 @@
       "Ggg jr", "AnnaFG", "Sara", "Marco", "Markeeeeohh", "Noemy",
       "Isabella", "Tiziano", "Valentina", "Leonardo", "Lavinia", "Mont"
     ];
-
     const container = document.getElementById("names-container");
     names.forEach((n, i) => {
       const div = document.createElement("div");
@@ -146,7 +157,7 @@
       container.appendChild(div);
     });
 
-    // IntersectionObserver per trigger animazione al scroll
+    // IntersectionObserver per cascata quando entra in viewport
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -155,7 +166,6 @@
         }
       });
     }, { threshold: 0.2 });
-
     observer.observe(document.getElementById("names-section"));
 
     // Confetti
